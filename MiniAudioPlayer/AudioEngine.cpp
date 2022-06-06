@@ -234,9 +234,6 @@ int CAudioEngine::PlayRecording()
 int CAudioEngine::Quit()
 {
     if (m_bRecord)
-        drwav_uninit(&gAudioEngineParams->m_wav);
-
-    if (m_bRecord)
     {
         ma_device_uninit(&gAudioEngineParams->m_device);
         drwav_uninit(&gAudioEngineParams->m_wav);
