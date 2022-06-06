@@ -225,7 +225,7 @@ int CAudioEngine::PlayRecording()
 {
     m_fileName = "TestRecording.wav";
 
-    if (!gAudioEngineParams->m_engine.ownsDevice)
+    if (gAudioEngineParams->m_engine.ownsDevice)
         InitializePlayback();
 
     return ResumePlayback();
@@ -261,12 +261,12 @@ int CAudioEngine::InitializePlayback()
 {
     ma_result result;
 
-    result = ma_engine_init(NULL, &gAudioEngineParams->m_engine);
-    if (result != MA_SUCCESS) {
-        printf("Failed to initialize audio engine.");
-        return -1;
-    }
-
+    //result = ma_engine_init(NULL, &gAudioEngineParams->m_engine);
+    //if (result != MA_SUCCESS) {
+    //    printf("Failed to initialize audio engine.");
+    //    return -1;
+    //}
+    gAudioEngineParams->m_vtAudioPlayback.resize(1);
     result = ma_sound_init_from_file(&gAudioEngineParams->m_engine, m_fileName.c_str(), MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC, NULL, NULL, &gAudioEngineParams->m_vtAudioPlayback[0].m_sound);
     if (result != MA_SUCCESS) {
         return result;
