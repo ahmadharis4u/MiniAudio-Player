@@ -74,6 +74,8 @@ int CAudioEngine::PlayAudios(int nCount)
 {
     if (gAudioEngineParams->m_vtAudioPlayback.empty())
     {
+        gAudioEngineParams->m_vtAudioPlayback.resize(nCount);
+
         for (int i = 0; i < nCount; ++i)
         {
             string fName = "TestAudio_";
@@ -83,16 +85,13 @@ int CAudioEngine::PlayAudios(int nCount)
             ifstream ifs(fName.c_str(), ios::in | ios::binary);
             if (ifs.is_open())
             {
-                AudioPlayback audioPlayback;
+                AudioPlayback& audioPlayback = gAudioEngineParams->m_vtAudioPlayback[i];
                 audioPlayback.nSize = filesystem::file_size(fName);
                 audioPlayback.pData = new char[audioPlayback.nSize];
 
                 ifs.read(audioPlayback.pData, audioPlayback.nSize);
 
-                gAudioEngineParams->m_vtAudioPlayback.push_back(audioPlayback);
-                int nSize = gAudioEngineParams->m_vtAudioPlayback.size() - 1;
-
-                PrepareAudio(&gAudioEngineParams->m_vtAudioPlayback[nSize]);
+                PrepareAudio(&gAudioEngineParams->m_vtAudioPlayback[i]);
             }
             ifs.close();
         }

@@ -206,7 +206,7 @@ void CMiniAudioPlayerDlg::OnBnPlayPause()
 	if (!m_bPlay)
 	{
 #ifdef USE_AUDIO_ENGINE
-		ret = m_audioEngine.PlayAudios(1);
+		ret = m_audioEngine.PlayAudios(2);
 #else
 		ret = m_audioHelper.SimplePlayback();
 #endif
